@@ -1,27 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDom from "react-dom";
 
 import "./styles.scss";
 
 const root = document.querySelector("#root");
 
+const StarsDisplay = (props) => {
+	return (
+		<>
+			{utils.range(1, props.count).map((starId) => (
+				<div key={starId} className="star"></div>
+			))}
+		</>
+	);
+};
+
+const PlayNumber = (props) => {
+	return (
+		<button
+			className="num"
+			onClick={() => console.log("Number:", props.number)}
+		>
+			{props.number}
+		</button>
+	);
+};
+
 const StarMatch = () => {
-	const stars = utils.random(1, 9);
+	const [stars, setStars] = useState(utils.random(1, 9));
 
 	return (
 		<div className="container">
 			<p>Pick 1 or more numbers that sum to the number of stars</p>
 			<div className="box">
 				<div className="stars">
-					{utils.range(1, stars).map((starId) => (
-						<div key={starId} className="star"></div>
-					))}
+					<StarsDisplay count={stars} />
 				</div>
 				<div className="nums">
 					{utils.range(1, 9).map((number) => (
-						<button key={number} className="num">
-							{number}
-						</button>
+						<PlayNumber key={number} number={number} />
 					))}
 				</div>
 			</div>
