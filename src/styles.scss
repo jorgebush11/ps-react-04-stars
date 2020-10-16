@@ -8,10 +8,11 @@ body{background: #222; color: #fff; font-family: 'Lucida Sans', 'Lucida Sans Reg
 
 /*■■■■■■■■■■■■■■■■■ Box */
 .box{
-  display: flex; border: 1px solid rgba(#fff, 0.2); padding: 10px; text-align: center; margin-top: 20px;
+  display: flex; border: 1px solid rgba(#fff, 0.2); padding: 10px; text-align: center; margin-top: 20px; height: 300px;
 
   .stars{
-    display: grid; grid-template-columns: repeat(3, 1fr); flex: 1; grid-gap :10px;
+    //display: grid; grid-template-columns: repeat(3, 1fr); flex: 1; grid-gap :10px;
+    flex: 1;
   }
 
   .nums{
@@ -21,13 +22,13 @@ body{background: #222; color: #fff; font-family: 'Lucida Sans', 'Lucida Sans Reg
 
 /*■■■■■■■■■■■■■■■■■ Stars */
 .star{
-  
-  &:after{content: "\2605"; font-size: 55px; line-height: 60px;}
+  float: left; box-sizing: inherit; width: 33%; height: 33%;
+  &:after{content: "\2605"; font-size: 55px;}
 }
 
 /*■■■■■■■■■■■■■■■■■ Numbers */
 .num{
-  background: #345; display: flex; justify-content: center; align-items: center; border-radius: 5px; font-size: 1.5rem; cursor: pointer;
+  background: #345; display: flex; justify-content: center; align-items: center; border-radius: 5px; font-size: 1.5rem; cursor: pointer; border: 1px solid blue; outline: none; color: #fff;
 }
 
 /*■■■■■■■■■■■■■■■■■  */
