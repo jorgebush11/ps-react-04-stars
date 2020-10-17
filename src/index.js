@@ -19,6 +19,7 @@ const PlayNumber = (props) => {
 	return (
 		<button
 			className="num"
+			style={{ backgroundColor: colors[props.status] }}
 			onClick={() => console.log("Number:", props.number)}
 		>
 			{props.number}
@@ -29,6 +30,21 @@ const PlayNumber = (props) => {
 const StarMatch = () => {
 	const [stars, setStars] = useState(utils.random(1, 9));
 
+	const [availableNumbers, setAvailableNums] = useState([1, 2, 3, 4, 5]);
+	const [candidateNums, setCandidateNums] = useState([2, 3]);
+
+	const candidateWrong = utils.sum(candidateNums) > stars;
+
+	function numberStatus(number) {
+		if (!availableNumbers.includes(number)) {
+			return "used";
+		}
+		if (candidateNums.includes(number)) {
+			return candidateWrong ? "wrong" : "candidate";
+		}
+		return "available";
+	}
+
 	return (
 		<div className="container">
 			<p>Pick 1 or more numbers that sum to the number of stars</p>
@@ -38,7 +54,11 @@ const StarMatch = () => {
 				</div>
 				<div className="nums">
 					{utils.range(1, 9).map((number) => (
-						<PlayNumber key={number} number={number} />
+						<PlayNumber
+							key={number}
+							status={numberStatus(number)}
+							number={number}
+						/>
 					))}
 				</div>
 			</div>
