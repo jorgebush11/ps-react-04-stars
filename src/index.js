@@ -27,6 +27,14 @@ const PlayNumber = (props) => {
 	);
 };
 
+const PlayAgain = (props) => {
+	return (
+		<div className="game-done">
+			<button onClick={props.onClick}>Play Again</button>
+		</div>
+	);
+};
+
 const StarMatch = () => {
 	const [stars, setStars] = useState(utils.random(1, 9));
 
@@ -34,6 +42,13 @@ const StarMatch = () => {
 	const [candidateNums, setCandidateNums] = useState([]);
 
 	const candidateWrong = utils.sum(candidateNums) > stars;
+	const gameIsDone = availableNumbers.length === 0;
+
+	const resetGame = () => {
+		setStars(utils.random(1, 9));
+		setAvailableNums(utils.range(1, 9));
+		setCandidateNums([]);
+	};
 
 	const numberStatus = (number) => {
 		if (!availableNumbers.includes(number)) {
@@ -73,7 +88,11 @@ const StarMatch = () => {
 			<p>Pick 1 or more numbers that sum to the number of stars</p>
 			<div className="box">
 				<div className="stars">
-					<StarsDisplay count={stars} />
+					{gameIsDone ? (
+						<PlayAgain onClick={resetGame} />
+					) : (
+						<StarsDisplay count={stars} />
+					)}
 				</div>
 				<div className="nums">
 					{utils.range(1, 9).map((number) => (
