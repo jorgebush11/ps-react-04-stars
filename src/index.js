@@ -30,6 +30,12 @@ const PlayNumber = (props) => {
 const PlayAgain = (props) => {
 	return (
 		<div className="game-done">
+			<div
+				className="message"
+				style={{ color: props.gameStatus === "lost" ? "red" : "green" }}
+			>
+				{props.gameStatus === "lost" ? "Game Over.." : "Good job..."}
+			</div>
 			<button onClick={props.onClick}>Play Again</button>
 		</div>
 	);
@@ -45,14 +51,21 @@ const StarMatch = () => {
 	//Set timeout, use another hook
 	useEffect(() => {
 		if (secondsLeft > 0) {
-			setTimeout(() => {
+			const timerId = setTimeout(() => {
 				setSecondsLeft(secondsLeft - 1);
 			}, 1000);
+			return () => clearTimeout(timerId);
 		}
 	});
 
 	const candidateWrong = utils.sum(candidateNums) > stars;
-	const gameIsDone = availableNumbers.length === 0;
+
+	const gameStatus =
+		availableNumbers.length === 0
+			? "won"
+			: secondsLeft === 0
+			? "lost"
+			: "active";
 
 	const resetGame = () => {
 		setStars(utils.random(1, 9));
@@ -98,8 +111,8 @@ const StarMatch = () => {
 			<p>Pick 1 or more numbers that sum to the number of stars</p>
 			<div className="box">
 				<div className="stars">
-					{gameIsDone ? (
-						<PlayAgain onClick={resetGame} />
+					{gameStatus !== "active" ? (
+						<PlayAgain onClick={resetGame} gameStatus={gameStatus} />
 					) : (
 						<StarsDisplay count={stars} />
 					)}
