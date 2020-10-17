@@ -50,7 +50,11 @@ const StarMatch = () => {
 			return;
 		}
 
-		const newCandidateNums = candidateNums.concat(number);
+		const newCandidateNums =
+			currentStatus === "available"
+				? candidateNums.concat(number)
+				: candidateNums.filter((cn) => cn !== number);
+
 		if (utils.sum(newCandidateNums) !== stars) {
 			setCandidateNums(newCandidateNums);
 		} else {
